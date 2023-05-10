@@ -1,7 +1,7 @@
-from funciones import procesar_datos, limpiar_datos
+from funciones import procesar_datos, limpiar_datos, enviar_wp
 
 def main():
-    limpiar_datos("todo_castellon_v1.csv")
+    enviar_wp("prova.csv","-1",3)
 
 if __name__ == "__main__":
     main()

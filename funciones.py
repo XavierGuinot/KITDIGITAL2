@@ -24,16 +24,17 @@ def enviar_wp(datos,localidad,num_msg):
             cliente.localidad = row[7]
             if cliente.tlf_movil != -1 and (cliente.tlf_movil[0] == "6" or cliente.tlf_movil[0] == "7") and len(cliente.tlf_movil) == 9 and cliente.localidad == localidad and cliente.whatsapp_enviado == -1:
                 v_clientes.append(cliente)
-        espera = 60
-        hora_actual = datetime.datetime.now()
+        espera = 59
+        hora_actual = datetime.datetime.now()  # obtener la hora actual
+        hora_envio = hora_actual + datetime.timedelta(minutes=2)
         for i in range(num_msg):  # enviar 10 mensajes
-            hora_envio = hora_actual + datetime.timedelta(minutes=i)  # programar el envío de cada mensaje
-            hora_envio_str = hora_envio.strftime("%H:%M")  # convertir la hora de envío a una cadena de texto
+            hora_envio_str = hora_envio.strftime("%H:%M")
             print(f"Enviando mensaje {i + 1} a las {hora_envio_str}...")
             numero = "+34" + v_clientes[i].tlf_movil
             mensaje = "açò és una prova"
             pywhatkit.sendwhatmsg(numero, mensaje, hora_envio.hour, hora_envio.minute, wait_time=10)
-            v_clientes[i].whatsapp_enviado = "si"
+            hora_envio = hora_envio + datetime.timedelta(
+                minutes=1)  # programar el envío del siguiente mensaje un minuto después
             time.sleep(espera)
 
 
